@@ -1,13 +1,10 @@
-# Local value definitions
-# Define local values for computed or transformed variables
-#
-# Example:
-# locals {
-#   common_tags = {
-#     Environment = var.environment
-#     Project     = var.project_id
-#     ManagedBy   = "terraform"
-#   }
-#
-#   resource_prefix = "${var.project_id}-${var.environment}"
-# }
+// Local values centralizing naming & domains
+locals {
+  pb_base_name = "${var.name_prefix}-pb"
+  fe_base_name = "${var.name_prefix}-web"
+
+  auth_domain     = "${var.auth_subdomain}.${var.base_domain}"
+  frontend_domain = "${var.frontend_subdomain}.${var.base_domain}"
+
+  resource_prefix = var.name_prefix
+}

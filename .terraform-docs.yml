@@ -19,21 +19,17 @@ content: |-
   ## Usage
 
   ```hcl
-  module "cloudrun_ai_app" {
-    source  = "openteams-ai/cloudrun-ai-app/gcp"
-    version = "~> 1.0"
+  module "pocketbase_stack" {
+    source  = "github.com/openteams-ai/terraform-pocketbase-gcp-deploy"
 
-    project_id     = "my-gcp-project"
-    region         = "us-central1"
-    customer_name  = "acme-corp"
-    domain_name    = "acme.example.com"
-
-    # Application configuration
-    app_image      = "gcr.io/my-project/ai-app:latest"
-    app_env_vars   = {
-      AI_BACKEND_URL = "https://api.openai.com/v1"
-      MCP_SERVER_URL = "https://mcp.example.com"
-    }
+    project_id    = "my-gcp-project"
+    region        = "us-central1"
+    name_prefix   = "myapp-dev"
+    base_domain   = "example.com"
+    cookie_domain = ".example.com"
+  pocketbase_image     = "us-docker.pkg.dev/myproj/images/pocketbase:fuse"
+  enable_frontend_service = true
+  frontend_image          = "us-docker.pkg.dev/myproj/images/web:latest"
   }
   ```
 
