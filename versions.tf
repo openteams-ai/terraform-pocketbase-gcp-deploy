@@ -2,12 +2,11 @@
 // Define required versions for Terraform and providers
 
 terraform {
-  required_version = ">= 1.5"
-
+  required_version = ">= 1.8.7"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 5.0"
+      version = "~> 6.49.1"
     }
     random = {
       source  = "hashicorp/random"

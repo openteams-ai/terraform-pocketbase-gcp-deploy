@@ -8,29 +8,24 @@ output "pocketbase_service_account" {
   value       = google_service_account.pb.email
 }
 
-output "litestream_replica_url" {
-  description = "Litestream replica URL injected (null if disabled)"
-  value       = var.litestream_replica_url
+output "storage_primary_bucket" {
+  description = "Effective primary object storage bucket name"
+  value       = local.pb_s3_bucket_name
 }
 
-output "litestream_db_path" {
-  description = "Path to the SQLite DB used by Litestream"
-  value       = var.litestream_db_path
+output "storage_backups_bucket" {
+  description = "Effective backups bucket name (may equal primary)"
+  value       = local.pb_backups_bucket_name
 }
 
-output "frontend_url" {
-  description = "Frontend service URL (null if disabled)"
-  value       = try(google_cloud_run_v2_service.frontend[0].uri, null)
-}
+# output "frontend_url" {
+#   description = "Frontend service URL (null if disabled)"
+#   value       = try(google_cloud_run_v2_service.frontend[0].uri, null)
+# }
 
 output "auth_domain" {
   description = "Auth (PocketBase) domain constructed from subdomain + base domain"
   value       = "${var.auth_subdomain}.${var.base_domain}"
-}
-
-output "cookie_domain" {
-  description = "Cookie domain shared across services"
-  value       = var.cookie_domain
 }
 
 output "pocketbase_custom_domain" {
@@ -51,4 +46,10 @@ output "cloudflare_pocketbase_record" {
 output "cloudflare_frontend_record" {
   description = "Cloudflare record (subdomain) created for Frontend (if enabled)."
   value       = var.enable_cloudflare_dns && var.enable_frontend_service && var.base_domain != "" ? var.app_subdomain : null
+}
+
+output "pb_admin_password" {
+  description = "Bootstrap admin password (also stored in Secret Manager; rotate after first login)"
+  value       = random_password.pb_admin_password.result
+  sensitive   = true
 }
