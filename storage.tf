@@ -1,3 +1,10 @@
+resource "google_storage_bucket" "pb_livestream_bucket" {
+  name     = "${var.name_prefix}-pb-livestream"
+  project  = var.project_id
+  location = var.region
+  labels   = merge(var.labels, { component = "pocketbase", purpose = "livestream-storage" })
+}
+
 # create if user did not supply s3_bucket
 resource "google_storage_bucket" "pb_s3_bucket" {
   count    = var.s3_bucket == "" ? 1 : 0

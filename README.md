@@ -53,14 +53,15 @@ frontend_image          = "us-docker.pkg.dev/myproj/images/web:latest"
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.7 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 4.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 6.49.1 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.8.4 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 7.0.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.7.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.52.1 |
 | <a name="provider_google"></a> [google](#provider\_google) | 6.49.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
 
@@ -72,6 +73,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [cloudflare_record.pocketbase](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
 | [google_cloud_run_domain_mapping.pocketbase](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
 | [google_cloud_run_v2_service.pocketbase](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service) | resource |
 | [google_cloud_run_v2_service_iam_member.pb_invoker](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service_iam_member) | resource |
@@ -84,6 +86,7 @@ No modules.
 | [google_secret_manager_secret_version.pb_encryption_key_v1](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_service_account.pb](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_storage_bucket.pb_backups_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket.pb_livestream_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket.pb_s3_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket_iam_member.pb_backups_bucket_admin](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_iam_member.pb_backups_bucket_admin_existing](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
@@ -101,18 +104,17 @@ No modules.
 | <a name="input_additional_env"></a> [additional\_env](#input\_additional\_env) | Additional environment variables applied to PocketBase container | `map(string)` | `{}` | no |
 | <a name="input_admin_email"></a> [admin\_email](#input\_admin\_email) | Initial PocketBase admin email to bootstrap (used only on first deploy if container entrypoint supports it) | `string` | `"admin@example.com"` | no |
 | <a name="input_allow_unauthenticated"></a> [allow\_unauthenticated](#input\_allow\_unauthenticated) | Allow unauthenticated invocation of services (public access) | `bool` | `true` | no |
-| <a name="input_app_subdomain"></a> [app\_subdomain](#input\_app\_subdomain) | Alias for frontend subdomain (if separate) used in DNS records | `string` | `"app"` | no |
-| <a name="input_auth_subdomain"></a> [auth\_subdomain](#input\_auth\_subdomain) | Subdomain for PocketBase service (auth.example.com) | `string` | `"auth"` | no |
 | <a name="input_backups_cron"></a> [backups\_cron](#input\_backups\_cron) | Cron expression for backups (leave empty to disable schedule if backups enabled; compose had no default) | `string` | `""` | no |
 | <a name="input_backups_cron_max_keep"></a> [backups\_cron\_max\_keep](#input\_backups\_cron\_max\_keep) | Max number of backup archives to retain (compose default 5) | `string` | `"5"` | no |
 | <a name="input_backups_s3_bucket"></a> [backups\_s3\_bucket](#input\_backups\_s3\_bucket) | Bucket for PocketBase backups (can be same as s3\_bucket) | `string` | `""` | no |
 | <a name="input_backups_s3_enabled"></a> [backups\_s3\_enabled](#input\_backups\_s3\_enabled) | Enable periodic PocketBase backup uploads to object storage | `bool` | `false` | no |
-| <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base apex/root domain (example.com) for constructing service URLs; empty to use internal/local URL | `string` | `""` | no |
+| <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | Cloudflare Zone ID for the base domain | `string` | `""` | no |
+| <a name="input_deployment_env"></a> [deployment\_env](#input\_deployment\_env) | Logical deployment environment identifier (e.g. local, staging, prod) exposed as DEPLOYMENT\_ENV | `string` | `"local"` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Whether to create Cloudflare DNS records for PocketBase and frontend | `bool` | `false` | no |
-| <a name="input_enable_frontend_service"></a> [enable\_frontend\_service](#input\_enable\_frontend\_service) | Deploy frontend Cloud Run service when true and frontend\_image provided | `bool` | `false` | no |
-| <a name="input_frontend_subdomain"></a> [frontend\_subdomain](#input\_frontend\_subdomain) | Subdomain for frontend (app.example.com) | `string` | `"app"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Optional map of labels applied to supported resources | `map(string)` | `{}` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix used for naming resources (e.g. myapp-dev) | `string` | n/a | yes |
+| <a name="input_pb_auth_subdomain"></a> [pb\_auth\_subdomain](#input\_pb\_auth\_subdomain) | Subdomain for PocketBase service (auth.example.com) | `string` | `"auth"` | no |
+| <a name="input_pb_base_domain"></a> [pb\_base\_domain](#input\_pb\_base\_domain) | Domain for PocketBase service (e.g. pb.example.com) | `string` | `""` | no |
 | <a name="input_pocketbase_image"></a> [pocketbase\_image](#input\_pocketbase\_image) | Container image reference for PocketBase (supports Litestream if baked-in) | `string` | n/a | yes |
 | <a name="input_pocketbase_resources"></a> [pocketbase\_resources](#input\_pocketbase\_resources) | Resource settings for the PocketBase Cloud Run container (cpu as number, memory as string like 512Mi / 1Gi) | <pre>object({<br/>    cpu    = number<br/>    memory = string<br/>  })</pre> | <pre>{<br/>  "cpu": 1,<br/>  "memory": "512Mi"<br/>}</pre> | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | GCP project ID where resources will be deployed | `string` | n/a | yes |
@@ -129,12 +131,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_auth_domain"></a> [auth\_domain](#output\_auth\_domain) | Auth (PocketBase) domain constructed from subdomain + base domain |
-| <a name="output_cloudflare_frontend_record"></a> [cloudflare\_frontend\_record](#output\_cloudflare\_frontend\_record) | Cloudflare record (subdomain) created for Frontend (if enabled). |
 | <a name="output_cloudflare_pocketbase_record"></a> [cloudflare\_pocketbase\_record](#output\_cloudflare\_pocketbase\_record) | Cloudflare record (subdomain) created for PocketBase (if enabled). |
-| <a name="output_frontend_custom_domain"></a> [frontend\_custom\_domain](#output\_frontend\_custom\_domain) | Custom domain mapped to the Frontend service (if enabled). |
 | <a name="output_pb_admin_password"></a> [pb\_admin\_password](#output\_pb\_admin\_password) | Bootstrap admin password (also stored in Secret Manager; rotate after first login) |
-| <a name="output_pocketbase_custom_domain"></a> [pocketbase\_custom\_domain](#output\_pocketbase\_custom\_domain) | Custom domain mapped to the PocketBase service (if enabled). |
 | <a name="output_pocketbase_service_account"></a> [pocketbase\_service\_account](#output\_pocketbase\_service\_account) | Service account email used by PocketBase |
 | <a name="output_pocketbase_url"></a> [pocketbase\_url](#output\_pocketbase\_url) | Deployed PocketBase service base URL |
 | <a name="output_storage_backups_bucket"></a> [storage\_backups\_bucket](#output\_storage\_backups\_bucket) | Effective backups bucket name (may equal primary) |

@@ -1,20 +1,17 @@
-// Terraform and provider version constraints
-// Define required versions for Terraform and providers
-
 terraform {
   required_version = ">= 1.8.7"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 6.49.1"
+      version = "~> 7.0.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.6"
+      version = "~> 3.7.2"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
+      version = "~> 5.8.4"
     }
   }
 }

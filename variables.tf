@@ -22,18 +22,11 @@ variable "labels" {
   default     = {}
 }
 
-// PocketBase container & mode
+// PocketBase container
 variable "pocketbase_image" {
   description = "Container image reference for PocketBase (supports Litestream if baked-in)"
   type        = string
 }
-
-
-# variable "pocketbase_min_instances" {
-#   description = "Minimum Cloud Run instances for PocketBase (keep warm)"
-#   type        = number
-#   default     = 0
-# }
 
 variable "pocketbase_resources" {
   description = "Resource settings for the PocketBase Cloud Run container (cpu as number, memory as string like 512Mi / 1Gi)"
@@ -44,16 +37,6 @@ variable "pocketbase_resources" {
   default = {
     cpu    = 1
     memory = "512Mi"
-  }
-}
-
-variable "base_domain" {
-  description = "Base apex/root domain (example.com) for constructing service URLs; empty to use internal/local URL"
-  type        = string
-  default     = ""
-  validation {
-    condition     = var.base_domain == "" || can(regex("^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+$", var.base_domain))
-    error_message = "base_domain must be empty or a valid domain (e.g. example.com)."
   }
 }
 
@@ -140,31 +123,6 @@ variable "backups_cron_max_keep" {
   default     = "5"
 }
 
-variable "auth_subdomain" {
-  description = "Subdomain for PocketBase service (auth.example.com)"
-  type        = string
-  default     = "auth"
-}
-
-// Frontend service configuration
-# variable "frontend_image" {
-#   description = "Container image for Nginx SPA"
-#   type        = string
-#   default     = null
-# }
-
-variable "enable_frontend_service" {
-  description = "Deploy frontend Cloud Run service when true and frontend_image provided"
-  type        = bool
-  default     = false
-}
-
-variable "frontend_subdomain" {
-  description = "Subdomain for frontend (app.example.com)"
-  type        = string
-  default     = "app"
-}
-
 variable "allow_unauthenticated" {
   description = "Allow unauthenticated invocation of services (public access)"
   type        = bool
@@ -177,6 +135,20 @@ variable "additional_env" {
   default     = {}
 }
 
+variable "deployment_env" {
+  description = "Logical deployment environment identifier (e.g. local, staging, prod) exposed as DEPLOYMENT_ENV"
+  type        = string
+  default     = "local"
+}
+
+# variable "gcp_application_credentials_b64" {
+#   description = "Optional base64 encoded GCP service account JSON (for Litestream or S3-compatible access) exposed as GCP_APPLICATION_CREDENTIALS_B64 when non-empty"
+#   type        = string
+#   default     = ""
+#   sensitive   = true
+# }
+
+
 // DNS / Cloudflare
 variable "enable_cloudflare_dns" {
   description = "Whether to create Cloudflare DNS records for PocketBase and frontend"
@@ -184,14 +156,21 @@ variable "enable_cloudflare_dns" {
   default     = false
 }
 
-# variable "cloudflare_zone_id" {
-#   description = "Cloudflare Zone ID for the base domain"
-#   type        = string
-#   default     = ""
-# }
 
-variable "app_subdomain" {
-  description = "Alias for frontend subdomain (if separate) used in DNS records"
+variable "pb_auth_subdomain" {
+  description = "Subdomain for PocketBase service (auth.example.com)"
   type        = string
-  default     = "app"
+  default     = "auth"
+}
+
+variable "pb_base_domain" {
+  description = "Domain for PocketBase service (e.g. pb.example.com)"
+  type        = string
+  default     = ""
+}
+
+variable "cloudflare_zone_id" {
+  description = "Cloudflare Zone ID for the base domain"
+  type        = string
+  default     = ""
 }

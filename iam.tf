@@ -57,6 +57,7 @@ resource "google_storage_bucket_iam_member" "pb_backups_bucket_admin_existing" {
 
 resource "google_cloud_run_v2_service_iam_member" "pb_invoker" {
   count    = var.allow_unauthenticated ? 1 : 0
+  project  = var.project_id
   name     = google_cloud_run_v2_service.pocketbase.name
   location = var.region
   role     = "roles/run.invoker"
