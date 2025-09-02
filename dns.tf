@@ -7,13 +7,14 @@ resource "google_cloud_run_domain_mapping" "pocketbase" {
 }
 
 # Cloudflare DNS records (CNAME -> ghs.googlehosted.com)
-resource "cloudflare_record" "pocketbase" {
+resource "cloudflare_dns_record" "pocketbase" {
   count      = var.enable_cloudflare_dns && var.pb_base_domain != "" ? 1 : 0
   zone_id    = var.cloudflare_zone_id
   name       = var.pb_auth_subdomain != "" ? "${var.pb_auth_subdomain}.${var.pb_base_domain}" : var.pb_base_domain
   content    = "ghs.googlehosted.com"
   type       = "CNAME"
   proxied    = false
+  ttl        = 1
   comment    = "Managed by Terraform - PocketBase endpoint for ${local.pb_base_name}"
   depends_on = [google_cloud_run_domain_mapping.pocketbase]
 }
