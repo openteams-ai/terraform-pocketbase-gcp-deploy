@@ -15,6 +15,7 @@ locals {
     LITESTREAM_GCS_BUCKET = google_storage_bucket.pb_litestream_bucket.name
     LITESTREAM_GCS_PATH   = "pocketbase/data.db"
     POCKETBASE_URL        = local.pocketbase_url
+    COOKIE_DOMAIN         = var.cookie_domain
   }
 
   pb_env = merge(

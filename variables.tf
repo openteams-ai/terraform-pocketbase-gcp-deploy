@@ -169,6 +169,11 @@ variable "pb_base_domain" {
   default     = ""
 }
 
+variable "cookie_domain" {
+  description = "Cookie domain for PocketBase authentication (e.g. .example.com)"
+  type        = string
+}
+
 variable "cloudflare_zone_id" {
   description = "Cloudflare Zone ID for the base domain"
   type        = string
