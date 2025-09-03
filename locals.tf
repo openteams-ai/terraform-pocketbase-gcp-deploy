@@ -12,7 +12,7 @@ locals {
     ADMIN_EMAIL           = var.admin_email
     DEPLOYMENT_ENV        = var.deployment_env
     LITESTREAM_ENABLED    = "true"
-    LITESTREAM_GCS_BUCKET = google_storage_bucket.pb_livestream_bucket.name
+    LITESTREAM_GCS_BUCKET = google_storage_bucket.pb_litestream_bucket.name
     LITESTREAM_GCS_PATH   = "pocketbase/data.db"
     POCKETBASE_URL        = local.pocketbase_url
   }

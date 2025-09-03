@@ -1,8 +1,8 @@
-resource "google_storage_bucket" "pb_livestream_bucket" {
-  name     = "${var.name_prefix}-pb-livestream"
+resource "google_storage_bucket" "pb_litestream_bucket" {
+  name     = "${var.name_prefix}-pb-litestream"
   project  = var.project_id
   location = var.region
-  labels   = merge(var.labels, { component = "pocketbase", purpose = "livestream-storage" })
+  labels   = merge(var.labels, { component = "pocketbase", purpose = "litestream-storage" })
 }
 
 # create if user did not supply s3_bucket
