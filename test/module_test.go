@@ -48,12 +48,12 @@ func TestModuleFunctionality(t *testing.T) {
 
 	// This is a placeholder test that always passes
 	// Replace this with actual module-specific tests when developing your module
-	
+
 	// Example assertions that demonstrate the testing pattern
 	result := "test-value"
 	assert.Equal(t, "test-value", result, "Basic assertion example")
 	assert.NotEmpty(t, result, "Non-empty check example")
-	
+
 	// This test passes to demonstrate the CI pipeline works
 	t.Log("Module functionality test placeholder - replace with actual tests")
 }

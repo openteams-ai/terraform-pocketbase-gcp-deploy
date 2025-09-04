@@ -18,4 +18,3 @@ resource "cloudflare_dns_record" "pocketbase" {
   comment    = "Managed by Terraform - PocketBase endpoint for ${local.pb_base_name}"
   depends_on = [google_cloud_run_domain_mapping.pocketbase]
 }
-
