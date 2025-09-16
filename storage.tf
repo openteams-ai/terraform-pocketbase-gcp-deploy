@@ -3,6 +3,8 @@ resource "google_storage_bucket" "pb_litestream_bucket" {
   project  = var.project_id
   location = var.region
   labels   = merge(var.labels, { component = "pocketbase", purpose = "litestream-storage" })
+
+  force_destroy = true
 }
 
 # create if user did not supply s3_bucket
