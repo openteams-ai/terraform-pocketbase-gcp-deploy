@@ -3,6 +3,8 @@ resource "google_storage_bucket" "pb_litestream_bucket" {
   project  = var.project_id
   location = var.region
   labels   = merge(var.labels, { component = "pocketbase", purpose = "litestream-storage" })
+
+  force_destroy = true
 }
 
 # create if user did not supply s3_bucket
@@ -12,6 +14,8 @@ resource "google_storage_bucket" "pb_s3_bucket" {
   project  = var.project_id
   location = var.region
   labels   = merge(var.labels, { component = "pocketbase", purpose = "primary-storage" })
+
+  force_destroy = true
 }
 
 data "google_storage_bucket" "pb_s3_bucket" {
@@ -27,6 +31,8 @@ resource "google_storage_bucket" "pb_backups_bucket" {
   project  = var.project_id
   location = var.region
   labels   = merge(var.labels, { component = "pocketbase", purpose = "backups" })
+
+  force_destroy = true
 }
 
 data "google_storage_bucket" "pb_backups_bucket" {
