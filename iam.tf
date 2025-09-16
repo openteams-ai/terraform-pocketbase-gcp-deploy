@@ -55,6 +55,12 @@ resource "google_storage_bucket_iam_member" "pb_backups_bucket_admin_existing" {
   member = "serviceAccount:${google_service_account.pb.email}"
 }
 
+resource "google_storage_bucket_iam_member" "pb_litestream_bucket_admin" {
+  bucket = google_storage_bucket.pb_litestream_bucket.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.pb.email}"
+}
+
 resource "google_cloud_run_v2_service_iam_member" "pb_invoker" {
   count    = var.allow_unauthenticated ? 1 : 0
   project  = var.project_id

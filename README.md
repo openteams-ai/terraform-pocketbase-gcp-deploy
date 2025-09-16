@@ -52,7 +52,7 @@ frontend_image          = "us-docker.pkg.dev/myproj/images/web:latest"
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.7 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.8.4 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 7.0.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.7.2 |
@@ -61,9 +61,9 @@ frontend_image          = "us-docker.pkg.dev/myproj/images/web:latest"
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.52.1 |
-| <a name="provider_google"></a> [google](#provider\_google) | 6.49.1 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | ~> 5.8.4 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 7.0.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.7.2 |
 
 ## Modules
 
@@ -73,7 +73,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_record.pocketbase](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_dns_record.pocketbase](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
 | [google_cloud_run_domain_mapping.pocketbase](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
 | [google_cloud_run_v2_service.pocketbase](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service) | resource |
 | [google_cloud_run_v2_service_iam_member.pb_invoker](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service_iam_member) | resource |
@@ -86,10 +86,11 @@ No modules.
 | [google_secret_manager_secret_version.pb_encryption_key_v1](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_service_account.pb](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_storage_bucket.pb_backups_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
-| [google_storage_bucket.pb_livestream_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket.pb_litestream_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket.pb_s3_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket_iam_member.pb_backups_bucket_admin](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_iam_member.pb_backups_bucket_admin_existing](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
+| [google_storage_bucket_iam_member.pb_litestream_bucket_admin](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_iam_member.pb_s3_bucket_admin](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_iam_member.pb_s3_bucket_admin_existing](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [random_bytes.pb_encryption_key](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/bytes) | resource |
@@ -109,6 +110,7 @@ No modules.
 | <a name="input_backups_s3_bucket"></a> [backups\_s3\_bucket](#input\_backups\_s3\_bucket) | Bucket for PocketBase backups (can be same as s3\_bucket) | `string` | `""` | no |
 | <a name="input_backups_s3_enabled"></a> [backups\_s3\_enabled](#input\_backups\_s3\_enabled) | Enable periodic PocketBase backup uploads to object storage | `bool` | `false` | no |
 | <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | Cloudflare Zone ID for the base domain | `string` | `""` | no |
+| <a name="input_cookie_domain"></a> [cookie\_domain](#input\_cookie\_domain) | Cookie domain for PocketBase authentication (e.g. .example.com) | `string` | n/a | yes |
 | <a name="input_deployment_env"></a> [deployment\_env](#input\_deployment\_env) | Logical deployment environment identifier (e.g. local, staging, prod) exposed as DEPLOYMENT\_ENV | `string` | `"local"` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Whether to create Cloudflare DNS records for PocketBase and frontend | `bool` | `false` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Optional map of labels applied to supported resources | `map(string)` | `{}` | no |
